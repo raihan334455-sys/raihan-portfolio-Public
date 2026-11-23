@@ -1,8 +1,8 @@
 // Supabase Dashboard → Project Settings → Data API থেকে Project URL,
 // এবং API Keys পেজ থেকে sb_publishable_... key বসান।
 window.CFG = {
-  url: "YOUR_SUPABASE_URL",
-  key: "YOUR_SUPABASE_ANON_KEY"
+  url: "https://bfovllztgjrswikuacao.supabase.co",
+  key: "sb_publishable_uZRtCE-nh1JgiTYqWJTS_g_WjRiipou"
 };
 CFG.ok = !/YOUR_/.test(CFG.url + CFG.key);
 if (CFG.ok) {
