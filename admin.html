@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="bn"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow"><title>Admin — RAIHAN RQR</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css"></head><body>
+<div class="wrap">
+<div class="top"><a class="brand" href="index.html"><i></i>← Website</a><button class="pill ghost" id="logout" hidden>Logout</button></div>
+
+<div class="card" id="login"><h2>Admin Login</h2><form id="loginForm" class="grid">
+<label class="wide">Email<input id="em" type="email" required autocomplete="username"></label>
+<label class="wide">Password<input id="pw" type="password" required autocomplete="current-password"></label>
+<div class="wide"><button class="pill">Login</button><span class="msg" id="loginMsg"></span></div></form></div>
+
+<div id="panel" hidden>
+<div class="card"><h2>Website Content</h2><div class="grid">
+<label>Name<input id="s_name"></label><label>Tagline (হিরো শিরোনাম)<input id="s_tagline"></label>
+<label class="wide">Intro (হিরো টেক্সট)<textarea id="s_intro"></textarea></label>
+<label class="wide">About / Bio<textarea id="s_bio"></textarea></label>
+<label>Email<input id="s_email" type="email"></label><label>Instagram URL<input id="s_instagram"></label>
+<label>Behance URL<input id="s_behance"></label>
+<div class="wide"><button class="pill" id="saveS">Save content</button><span class="msg" id="sMsg"></span></div></div></div>
+
+<div class="card"><h2 id="pTitle">Add Project</h2><form id="pForm" class="grid">
+<label>Title<input id="title" required></label><label>Category<input id="category" placeholder="Branding, Video, Poster…"></label>
+<label>Client<input id="client"></label><label>Project URL<input id="purl" placeholder="https://"></label>
+<label class="wide">Description<textarea id="desc"></textarea></label>
+<label class="wide">Image / Video<input id="file" type="file" accept="image/*,video/*"></label>
+<div class="wide"><button class="pill" id="pSave">Save project</button> <button type="button" class="pill ghost" id="pReset" hidden>Cancel edit</button><span class="msg" id="pMsg"></span></div></form></div>
+
+<div class="card"><h2>All Projects</h2><div id="list"></div></div>
+</div></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="js/config.js"></script><script src="js/admin.js"></script>
+</body></html>
