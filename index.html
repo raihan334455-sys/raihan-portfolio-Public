@@ -2,29 +2,44 @@
 <html lang="bn">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#7F0000"><title>RAIHAN RQR — Digital Creator</title>
+<meta name="theme-color" content="#7F0000"><title>RAIHAN RQR — Creative Designer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<nav><a class="brand" href="#top"><i></i><span id="brandName">RAIHAN RQR</span></a>
-<div class="links"><a href="#work">Work</a><a href="#about">About</a><a href="#contact">Contact</a></div>
-<a class="pill" href="#contact">Hire me</a></nav>
-<header id="top" class="hero">
-<div><div class="eyebrow">Digital Creator</div><h1 id="tagline">Make an impact.</h1>
-<p id="intro">Creative visuals built to capture attention and make your brand stand out.</p>
-<div class="actions"><a class="pill" href="#work">View work</a><a class="pill ghost" href="#contact">Contact</a></div></div>
-<div class="photo"><img src="assets/hero.jpg" alt="Hero"></div>
-</header>
-<section id="work"><div class="head"><div class="eyebrow">Selected creations</div><h2>Things I've made.</h2></div>
-<div class="filters" id="filters"></div><div class="projects" id="projects"></div></section>
-<section id="about"><div class="eyebrow">About</div><h2 style="font:600 40px 'Space Grotesk';letter-spacing:-.04em">Creator behind the work.</h2>
-<p id="bio">Digital creator focused on visuals that make brands stand out.</p></section>
-<section id="contact"><div class="eyebrow">Contact</div><h2 style="font:600 clamp(36px,5vw,60px) 'Space Grotesk';letter-spacing:-.05em">Let's make something.</h2>
-<div class="actions" id="contactLinks"><a class="pill" href="#top">Back to top</a></div></section>
-<footer><span>© <span id="yr"></span> RAIHAN RQR</span><a href="admin.html">Admin</a></footer>
-<script>document.getElementById('yr').textContent=new Date().getFullYear()</script>
+<nav><div class="w"><a class="brand" href="#home"><i class="fa-solid fa-bolt"></i><span id="brandName">RAIHAN RQR</span></a>
+<div class="links"><a href="#home" class="on">Home</a><a href="#about">About</a><a href="#services">Services</a><a href="#skills">Skills</a><a href="#projects">Projects</a><a href="#contact">Contact</a></div>
+<a class="btn ghost" href="#contact">Let's talk</a></div></nav>
+
+<div class="w"><header id="home" class="hero">
+<div><span class="tag"><i class="dot"></i><span id="role">Creative Designer</span></span>
+<h1 id="tagline">I design visuals that make an impact.</h1>
+<p id="intro"></p>
+<div class="actions"><a class="btn" href="#projects">View my work <i class="fa-solid fa-arrow-right"></i></a><a class="btn ghost" href="#contact">Contact me <i class="fa-regular fa-paper-plane"></i></a></div>
+<div class="find"><small>FIND ME ON</small><div class="icons" id="heroLinks"></div></div></div>
+<div class="hvis"><div class="ring r2"></div><div class="ring"></div><img src="assets/hero.jpg" alt="Hero">
+<div class="chip c-a"><i class="dot"></i><span id="availChip">Available for work</span></div>
+<div class="chip c-b"><i class="fa-solid fa-palette" style="color:var(--c2)"></i><div><b>Design</b>&amp; Motion</div></div></div>
+</header></div>
+
+<section id="statsWrap" class="w" hidden><div class="stats" id="stats"></div></section>
+
+<section id="about" class="w"><div class="eyebrow rv">About me</div><h2 class="t rv">The creator behind the work.</h2>
+<div class="about"><div class="cd abvis rv"><img src="assets/hero.jpg" alt=""></div>
+<div class="cd rv" style="--d:.1s"><h3 id="aboutTitle">Building visuals that make an impact.</h3><p id="bio"></p><a class="btn ghost" href="#contact">Work with me</a></div>
+<div class="cd info rv" style="--d:.2s"><div><span><i class="fa-regular fa-user"></i> Name</span><b id="iName">RAIHAN RQR</b></div><div id="iEmailRow"><span><i class="fa-regular fa-envelope"></i> Email</span><b id="iEmail"></b></div><div id="iLocRow"><span><i class="fa-solid fa-location-dot"></i> Location</span><b id="iLoc"></b></div><div><span><i class="fa-regular fa-clock"></i> Status</span><b id="iAvail"></b></div></div></div></section>
+
+<section id="services" class="w"><div class="eyebrow rv">Services</div><h2 class="t rv">What I can help you with</h2><div class="grid3" id="svc"></div></section>
+<section id="skills" class="w"><div class="eyebrow rv">Skills</div><h2 class="t rv">Tools I work with</h2><div class="grid3" id="skl"></div></section>
+<section id="projects" class="w"><div class="eyebrow rv">Featured projects</div><h2 class="t rv">Some things I've made</h2><div class="filters" id="filters"></div><div class="projects" id="projects"></div></section>
+
+<section id="contact" class="w"><div class="eyebrow rv">Let's work together</div><h2 class="t rv">Get in touch</h2>
+<div class="contact"><div class="cd rv"><p>Have a project or collaboration in mind? Send me a message and I will reply as soon as possible.</p><div id="cInfo"></div><div class="icons" id="contactLinks" style="margin-top:22px"></div></div>
+<form class="cd cform rv" id="cform" style="padding:26px;--d:.1s"><input id="fn" placeholder="Your name" required><input id="fe" type="email" placeholder="Your email" required><textarea id="fm" placeholder="Your message" required></textarea><button class="btn" style="justify-self:start">Send message <i class="fa-regular fa-paper-plane"></i></button></form></div></section>
+
+<footer><div class="w"><a class="brand" href="#home"><i class="fa-solid fa-bolt"></i><span class="fname">RAIHAN RQR</span></a><div class="icons" id="footLinks"></div><span>© <span id="yr"></span> <span class="fname">RAIHAN RQR</span> · <a href="admin.html">Admin</a></span></div></footer>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.119.0/dist/umd/supabase.js"></script>
 <script src="js/config.js"></script><script src="js/app.js"></script>
 </body></html>

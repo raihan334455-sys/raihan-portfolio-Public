@@ -13,11 +13,17 @@
 
 <div id="panel" hidden>
 <div class="card"><h2>Website Content</h2><div class="grid">
-<label>Name<input id="s_name"></label><label>Tagline (হিরো শিরোনাম)<input id="s_tagline"></label>
-<label class="wide">Intro (হিরো টেক্সট)<textarea id="s_intro"></textarea></label>
+<label>Name<input id="s_name"></label><label>Tagline (hero headline)<input id="s_tagline"></label>
+<label class="wide">Intro (hero text)<textarea id="s_intro"></textarea></label>
 <label class="wide">About / Bio<textarea id="s_bio"></textarea></label>
-<label>Email<input id="s_email" type="email"></label><label>Instagram URL<input id="s_instagram"></label>
-<label>Behance URL<input id="s_behance"></label>
+<label class="wide">Email<input id="s_email" type="email"></label>
+<label>Role (tag)<input id="s_role" placeholder="Creative Designer"></label>
+<label>Location<input id="s_location" placeholder="Dhaka, Bangladesh"></label>
+<label class="wide">Availability<input id="s_avail" placeholder="Open to new projects"></label>
+<label class="wide">Stats (one per line: number | label)<textarea id="s_stats" placeholder="4+ | Years Experience&#10;50+ | Projects Completed"></textarea></label>
+<label class="wide">Services (one per line: title | description)<textarea id="s_services" style="min-height:130px"></textarea></label>
+<label class="wide">Skills (one per line: name | percent, percent is optional)<textarea id="s_skills" placeholder="Photoshop | 90&#10;Premiere Pro | 80"></textarea></label>
+<div class="wide"><small style="color:var(--muted)">Links (Instagram, Facebook, YouTube, WhatsApp, LinkedIn…)</small><div id="linkList"></div><button type="button" class="pill ghost" id="addLink" style="margin-top:8px">+ Add link</button></div>
 <div class="wide"><button class="pill" id="saveS">Save content</button><span class="msg" id="sMsg"></span></div></div></div>
 
 <div class="card"><h2 id="pTitle">Add Project</h2><form id="pForm" class="grid">
