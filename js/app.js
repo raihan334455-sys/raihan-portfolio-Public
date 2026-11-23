@@ -92,6 +92,7 @@ async function boot() {
   const sb = supabase.createClient(CFG.url, CFG.key);
   const [s, p] = await Promise.all([sb.from("settings").select("*"), sb.from("projects").select("*").order("created_at", { ascending: false })]);
   applySettings(Object.fromEntries((s.data || []).map(r => [r.key, r.value])));
+  if (p.error) { $("#projects").innerHTML = `<div class="notice">Could not load projects: ${esc(p.error.message)}</div>`; return; }
   items = p.data || []; render();
 }
 boot();
