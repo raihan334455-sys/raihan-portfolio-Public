@@ -1,3 +1,4 @@
+ · JS
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const safe = u => { u = String(u || "").trim(); if (/^(https?:|mailto:|tel:)/i.test(u)) return u; if (/^[a-z][a-z0-9+.-]*:/i.test(u)) return "#"; return "https://" + u; };
@@ -14,7 +15,7 @@ const DEF = {
 };
 const SVC_ICONS = ["fa-pen-nib", "fa-hashtag", "fa-print", "fa-film", "fa-wand-magic-sparkles", "fa-object-group"];
 let items = [], active = "All", EMAIL = "", NAME = "RAIHAN RQR";
-
+ 
 function applySettings(set) {
   const g = k => set[k] || DEF[k] || "";
   NAME = g("name") || NAME;
@@ -28,14 +29,14 @@ function applySettings(set) {
   EMAIL = set.email || "";
   $("#iEmailRow").hidden = !EMAIL; $("#iEmail").textContent = EMAIL;
   $("#iLocRow").hidden = !set.location; $("#iLoc").textContent = set.location || "";
-
+ 
   const st = lines(set.stats), sIc = ["fa-calendar-check", "fa-code-branch", "fa-users", "fa-layer-group"];
   $("#statsWrap").hidden = !st.length;
   $("#stats").innerHTML = st.slice(0, 6).map((s, i) => `<div class="cd stat rv" style="--d:${i * .08}s"><i class="fa-solid ${sIc[i % 4]}"></i><div><strong data-to="${esc(s[0])}">${esc(s[0])}</strong><span>${esc(s[1] || "")}</span></div></div>`).join("");
-
+ 
   $("#svc").innerHTML = lines(g("services")).map((s, i) => `<div class="cd svc rv" style="--d:${(i % 6) * .08}s"><i class="fa-solid ${SVC_ICONS[i % 6]}"></i><h4>${esc(s[0])}</h4><p>${esc(s[1] || "")}</p></div>`).join("");
   $("#skl").innerHTML = lines(g("skills")).map((s, i) => { const p = parseInt(s[1]); return `<div class="cd skill rv" style="--d:${(i % 6) * .06}s"><div>${esc(s[0])}${p ? `<span>${p}%</span>` : ""}</div>${p ? `<div class="bar"><i data-w="${Math.min(p, 100)}"></i></div>` : ""}</div>`; }).join("");
-
+ 
   let extra = [];
   if (set.links !== undefined) { try { extra = JSON.parse(set.links).map(x => [x.label, x.url]); } catch (e) {} }
   else extra = [["Instagram", set.instagram], ["Behance", set.behance]];
@@ -45,7 +46,7 @@ function applySettings(set) {
   $("#cInfo").innerHTML = [[EMAIL, "fa-regular fa-envelope", "Email"], [set.location, "fa-solid fa-location-dot", "Location"], [g("avail"), "fa-regular fa-clock", "Status"]].filter(x => x[0]).map(x => `<div class="ci"><i class="${x[1]}"></i><div><small>${x[2]}</small>${esc(x[0])}</div></div>`).join("");
   observe();
 }
-
+ 
 function render() {
   const cats = ["All", ...new Set(items.map(p => p.category))];
   $("#filters").innerHTML = cats.map(c => `<button class="filter ${c === active ? "active" : ""}" data-c="${esc(c)}">${esc(c)}</button>`).join("");
@@ -58,7 +59,7 @@ function render() {
     || `<div class="empty">New work is coming soon.</div>`;
   observe();
 }
-
+ 
 function countUp(el) {
   const m = el.dataset.to.match(/^(\D*)(\d+(?:\.\d+)?)(.*)$/); if (!m) return;
   const to = parseFloat(m[2]), t0 = performance.now();
@@ -70,7 +71,7 @@ const io = new IntersectionObserver(es => es.forEach(e => {
   el.querySelectorAll("[data-to]").forEach(countUp);
 }), { threshold: .15 });
 function observe() { document.querySelectorAll(".rv:not(.in)").forEach(e => io.observe(e)); }
-
+ 
 const sections = [...document.querySelectorAll(".links a")];
 addEventListener("scroll", () => {
   let cur = "#home";
@@ -85,13 +86,13 @@ $("#cform").addEventListener("submit", e => {
   location.href = "mailto:" + EMAIL + "?subject=" + encodeURIComponent("Message from " + $("#fn").value) + "&body=" + encodeURIComponent(body);
 });
 $("#yr").textContent = new Date().getFullYear();
-
+ 
 async function boot() {
   applySettings({}); render();
   if (!CFG.ok) { $("#projects").innerHTML = `<div class="notice">Add your Supabase URL and key in js/config.js to show projects here.</div>`; return; }
   const sb = supabase.createClient(CFG.url, CFG.key);
   const [s, p] = await Promise.all([sb.from("settings").select("*"), sb.from("projects").select("*").order("created_at", { ascending: false })]);
-  applySettings(Object.fromEntries((s.data || []).map(r => [r.key, r.value])));
+  try { applySettings(Object.fromEntries((s.data || []).map(r => [r.key, r.value]))); } catch (e) { console.error("Settings error:", e); }
   if (p.error) { $("#projects").innerHTML = `<div class="notice">Could not load projects: ${esc(p.error.message)}</div>`; return; }
   items = p.data || []; render();
 }
