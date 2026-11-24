@@ -1,4 +1,3 @@
- · JS
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const safe = u => { u = String(u || "").trim(); if (/^(https?:|mailto:|tel:)/i.test(u)) return u; if (/^[a-z][a-z0-9+.-]*:/i.test(u)) return "#"; return "https://" + u; };
