@@ -1,8 +1,8 @@
 // Paste the Project URL from Supabase Dashboard → Project Settings → Data API,
 // and the sb_publishable_... key from the API Keys page.
 window.CFG = {
-  url: "https://bfovllztgjrswikuacao.supabase.co",
-  key: "sb_publishable_uZRtCE-nh1JgiTYqWJTS_g_WjRiipou"
+  url: "https://pcifvdefipohgxmetlet.supabase.co",
+  key: "sb_publishable_VLGHnSoRzz-ls48yIULQrA_zvSN9Eto"
 };
 CFG.ok = !/YOUR_/.test(CFG.url + CFG.key);
 if (CFG.ok) {
