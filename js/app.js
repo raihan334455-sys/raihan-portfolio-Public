@@ -14,7 +14,7 @@ const DEF = {
 };
 const SVC_ICONS = ["fa-pen-nib", "fa-hashtag", "fa-print", "fa-film", "fa-wand-magic-sparkles", "fa-object-group"];
 let items = [], active = "All", EMAIL = "", NAME = "RAIHAN RQR";
- 
+
 function applySettings(set) {
   const g = k => set[k] || DEF[k] || "";
   NAME = g("name") || NAME;
@@ -28,14 +28,14 @@ function applySettings(set) {
   EMAIL = set.email || "";
   $("#iEmailRow").hidden = !EMAIL; $("#iEmail").textContent = EMAIL;
   $("#iLocRow").hidden = !set.location; $("#iLoc").textContent = set.location || "";
- 
+
   const st = lines(set.stats), sIc = ["fa-calendar-check", "fa-code-branch", "fa-users", "fa-layer-group"];
   $("#statsWrap").hidden = !st.length;
   $("#stats").innerHTML = st.slice(0, 6).map((s, i) => `<div class="cd stat rv" style="--d:${i * .08}s"><i class="fa-solid ${sIc[i % 4]}"></i><div><strong data-to="${esc(s[0])}">${esc(s[0])}</strong><span>${esc(s[1] || "")}</span></div></div>`).join("");
- 
+
   $("#svc").innerHTML = lines(g("services")).map((s, i) => `<div class="cd svc rv" style="--d:${(i % 6) * .08}s"><i class="fa-solid ${SVC_ICONS[i % 6]}"></i><h4>${esc(s[0])}</h4><p>${esc(s[1] || "")}</p></div>`).join("");
   $("#skl").innerHTML = lines(g("skills")).map((s, i) => { const p = parseInt(s[1]); return `<div class="cd skill rv" style="--d:${(i % 6) * .06}s"><div>${esc(s[0])}${p ? `<span>${p}%</span>` : ""}</div>${p ? `<div class="bar"><i data-w="${Math.min(p, 100)}"></i></div>` : ""}</div>`; }).join("");
- 
+
   let extra = [];
   if (set.links !== undefined) { try { extra = JSON.parse(set.links).map(x => [x.label, x.url]); } catch (e) {} }
   else extra = [["Instagram", set.instagram], ["Behance", set.behance]];
@@ -45,12 +45,12 @@ function applySettings(set) {
   $("#cInfo").innerHTML = [[EMAIL, "fa-regular fa-envelope", "Email"], [set.location, "fa-solid fa-location-dot", "Location"], [g("avail"), "fa-regular fa-clock", "Status"]].filter(x => x[0]).map(x => `<div class="ci"><i class="${x[1]}"></i><div><small>${x[2]}</small>${esc(x[0])}</div></div>`).join("");
   observe();
 }
- 
+
 function render() {
   const cats = ["All", ...new Set(items.map(p => p.category))];
   $("#filters").innerHTML = cats.map(c => `<button class="filter ${c === active ? "active" : ""}" data-c="${esc(c)}">${esc(c)}</button>`).join("");
   const list = items.filter(p => active === "All" || p.category === active);
-  $("#projects").innerHTML = list.map((p, i) => `<article class="cd project rv" style="--d:${(i % 3) * .1}s"><div class="thumb">${
+  $("#projectGrid").innerHTML = list.map((p, i) => `<article class="cd project rv" style="--d:${(i % 3) * .1}s"><div class="thumb">${
     p.media_type === "video" ? `<video src="${esc(p.media_url)}" muted autoplay loop playsinline></video>`
     : p.media_url ? `<img src="${esc(p.media_url)}" alt="${esc(p.title)}" loading="lazy">` : esc(p.category)
   }</div><div class="pinfo"><small>${esc(p.category)}${p.client ? " · " + esc(p.client) : ""}</small><h3>${esc(p.title)}</h3><p>${esc(p.description)}</p>${
@@ -58,7 +58,7 @@ function render() {
     || `<div class="empty">New work is coming soon.</div>`;
   observe();
 }
- 
+
 function countUp(el) {
   const m = el.dataset.to.match(/^(\D*)(\d+(?:\.\d+)?)(.*)$/); if (!m) return;
   const to = parseFloat(m[2]), t0 = performance.now();
@@ -70,7 +70,7 @@ const io = new IntersectionObserver(es => es.forEach(e => {
   el.querySelectorAll("[data-to]").forEach(countUp);
 }), { threshold: .15 });
 function observe() { document.querySelectorAll(".rv:not(.in)").forEach(e => io.observe(e)); }
- 
+
 const sections = [...document.querySelectorAll(".links a")];
 addEventListener("scroll", () => {
   let cur = "#home";
@@ -85,14 +85,29 @@ $("#cform").addEventListener("submit", e => {
   location.href = "mailto:" + EMAIL + "?subject=" + encodeURIComponent("Message from " + $("#fn").value) + "&body=" + encodeURIComponent(body);
 });
 $("#yr").textContent = new Date().getFullYear();
- 
+
 async function boot() {
-  applySettings({}); render();
-  if (!CFG.ok) { $("#projects").innerHTML = `<div class="notice">Add your Supabase URL and key in js/config.js to show projects here.</div>`; return; }
-  const sb = supabase.createClient(CFG.url, CFG.key);
-  const [s, p] = await Promise.all([sb.from("settings").select("*"), sb.from("projects").select("*").order("created_at", { ascending: false })]);
-  try { applySettings(Object.fromEntries((s.data || []).map(r => [r.key, r.value]))); } catch (e) { console.error("Settings error:", e); }
-  if (p.error) { $("#projects").innerHTML = `<div class="notice">Could not load projects: ${esc(p.error.message)}</div>`; return; }
-  items = p.data || []; render();
+  applySettings({});
+  render();
+  if (!CFG.ok) {
+    $("#projectGrid").innerHTML = `<div class="notice">Supabase configuration is missing or invalid. Check js/config.js.</div>`;
+    return;
+  }
+  try {
+    if (!window.supabase?.createClient) throw new Error("Supabase library did not load. Check your internet connection or CDN access.");
+    const sb = window.supabase.createClient(CFG.url, CFG.key);
+    const [s, p] = await Promise.all([
+      sb.from("settings").select("*"),
+      sb.from("projects").select("*").order("created_at", { ascending: false })
+    ]);
+    if (s.error) console.warn("Could not load portfolio settings:", s.error.message);
+    else applySettings(Object.fromEntries((s.data || []).map(r => [r.key, r.value])));
+    if (p.error) throw p.error;
+    items = p.data || [];
+    render();
+  } catch (err) {
+    console.error("Portfolio loading failed:", err);
+    $("#projectGrid").innerHTML = `<div class="notice">Could not load projects: ${esc(err.message || "Unknown error")}. Check Supabase tables, permissions and connection.</div>`;
+  }
 }
 boot();
